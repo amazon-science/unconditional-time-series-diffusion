@@ -68,10 +68,10 @@ Use the `guidance_experiment.py` script and `configs/guidance.yaml` config to ru
 Example commands:
 ```sh
 # Run observation self-guidance on the Solar dataset
-python bin/guidance_experiment.py -c configs/guidance/guidance_solar.yaml --ckpt checkpoints/solar_nips/checkpoint_0.ckpt
+python bin/guidance_experiment.py -c configs/guidance/guidance_solar.yaml --ckpt /path/to/ckpt
 
 # Run observation self-guidance on the KDDCup dataset
-python bin/guidance_experiment.py -c configs/guidance/guidance_kdd_cup.yaml --ckpt checkpoints/kdd_cup_2018_without_missing/checkpoint_0.ckpt
+python bin/guidance_experiment.py -c configs/guidance/guidance_kdd_cup.yaml --ckpt /path/to/ckpt
 ```
 
 #### Refine Predictions of Base Forecasters
@@ -80,10 +80,10 @@ Use `refinement_experiment.py` script and `configs/refinement.yaml` config to ru
 Example commands:
 ```sh
 # Refine predictions from the Linear model on the Solar dataset
-python bin/refinement_experiment.py -c configs/refinement/solar_nips-linear.yaml --ckpt checkpoints/solar_nips/checkpoint_0.ckpt
+python bin/refinement_experiment.py -c configs/refinement/solar_nips-linear.yaml --ckpt /path/to/ckpt
 
 # Refine predictions from the DeepAR model on the M4 dataset
-python bin/refinement_experiment.py -c configs/refinement/m4_hourly-deepar.yaml --ckpt checkpoints/m4_hourly/checkpoint_0.ckpt
+python bin/refinement_experiment.py -c configs/refinement/m4_hourly-deepar.yaml --ckpt /path/to/ckpt
 ```
 #### Train Downstream Models using Synthetic Data
 Use `tstr_experiment.py` script and `configs/tstr.yaml` config to run the _train on synthetic-test on real_ experiments. Specific configurations used in the paper can be found in `configs/tstr/`.
@@ -91,10 +91,10 @@ Use `tstr_experiment.py` script and `configs/tstr.yaml` config to run the _train
 Example commands:
 ```sh
 # TSTR on the Solar Dataset
-python bin/tstr_experiment.py -c configs/tstr/solar_nips.yaml --ckpt checkpoints/solar_nips/checkpoint_0.ckpt
+python bin/tstr_experiment.py -c configs/tstr/solar_nips.yaml --ckpt /path/to/ckpt
 
 # TSTR on the KDDCup Dataset
-python bin/tstr_experiment.py -c configs/tstr/kdd_cup_2018_without_missing.yaml --ckpt checkpoints/kdd_cup_2018_without_missing/checkpoint_0.ckpt
+python bin/tstr_experiment.py -c configs/tstr/kdd_cup_2018_without_missing.yaml --ckpt /path/to/ckpt
 ```
 
 ## BibTeX
