@@ -1,6 +1,6 @@
 # TSDiff: An Unconditional Diffusion Model for Time Series
 
-[![preprint](https://img.shields.io/static/v1?label=arXiv&message=2301.11308&color=B31B1B)](https://arxiv.org/abs/2307.11494)
+[![preprint](https://img.shields.io/static/v1?label=arXiv&message=2307.11494&color=B31B1B)](https://arxiv.org/abs/2307.11494)
 [![License: MIT](https://img.shields.io/badge/License-Apache--2.0-yellow.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Venue:ICML 2023](https://img.shields.io/badge/Venue-NeurIPS%202023-007CFF)](https://neurips.cc/)
 
