@@ -1,0 +1,26 @@
+model: unconditional
+diffusion_config: diffusion_small_config
+normalization: mean
+use_features: False
+use_lags: True
+dataset: kdd_cup_2018_without_missing
+freq: H
+context_length: 312 # 360 for `D`
+prediction_length: 48 # 30 for `D`
+lr: 1.e-3
+init_skip: True
+gradient_clip_val: 0.5
+max_epochs: 1000
+num_batches_per_epoch: 128
+batch_size: 64
+# Used only in callback,
+# the final evaluation uses 100 samples
+num_samples: 16
+sampler: ddpm
+sampler_params:
+  guidance: quantile
+  scale: 1
+use_validation_set: True
+eval_every: 50
+device: cuda:0
+setup: forecasting

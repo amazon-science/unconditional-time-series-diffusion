@@ -1,0 +1,25 @@
+model: conditional
+diffusion_config: diffusion_small_config
+normalization: mean
+use_features: False
+use_lags: True
+dataset: solar_nips
+freq: H
+context_length: 336 # 360 for `D`
+prediction_length: 24 # 30 for `D`
+lr: 1.e-3
+init_skip: False
+gradient_clip_val: 0.5
+max_epochs: 100
+num_batches_per_epoch: 128
+batch_size: 64
+use_validation_set: True
+eval_every: 10
+device: cuda:0
+noise_observed: True
+do_final_eval: True
+setup: missing_values
+# The following keys will be ignored, if the setup is forecasting
+train_missing_scenario: BM-E
+missing_scenario: BM-E
+missing_values: 168

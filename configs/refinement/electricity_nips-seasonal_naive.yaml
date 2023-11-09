@@ -1,0 +1,30 @@
+base_model: seasonal_naive
+ckpt: dummy/electricity_nips.ckpt
+context_length: 336
+dataset: electricity_nips
+device: cuda:0
+init_skip: false
+iterations: 20
+num_samples: 100
+prediction_length: 24
+refiner_configs:
+- guidance: MSE
+  lr: 0.1
+  refiner_name: most_likely
+- guidance: quantile
+  lr: 0.1
+  refiner_name: most_likely
+- guidance: MSE
+  method: lmc
+  method_kwargs:
+    noise_scale: 0.1
+  refiner_name: mcmc
+  step_size: 0.1
+- guidance: quantile
+  method: lmc
+  method_kwargs:
+    noise_scale: 0.1
+  refiner_name: mcmc
+  step_size: 0.1
+use_features: false
+use_lags: true

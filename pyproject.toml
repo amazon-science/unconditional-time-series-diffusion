@@ -1,0 +1,27 @@
+[project]
+name = "uncond-ts-diff"
+version = "0.1.0"
+description = "TSDiff: An Unconditional Diffusion Model for Time Series"
+authors = []
+dependencies = [
+    "torch~=1.13.1",
+    "pytorch-lightning~=1.9.4",
+    "gluonts[mxnet,pro]~=0.12.3",
+    "matplotlib",
+    "seaborn",
+    "opt_einsum~=3.3.0",
+    "einops",
+    "black",
+    "tqdm",
+    "scipy",
+    "scikit-learn",
+    "numba",
+    "jupyter",
+    "rich",
+    "pykeops==2.1.1",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[tool.black]
+line-length = 79

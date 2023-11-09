@@ -1,0 +1,16 @@
+ckpt: dummy/path.ckpt
+context_length: 360
+dataset: exchange_rate_nips
+device: cuda:0
+diffusion_config: diffusion_small_config
+freq: B
+init_skip: true
+num_samples: 100
+prediction_length: 30
+sampler: ddpm
+sampler_params:
+  guidance: quantile
+  scale: 8
+setup: forecasting
+use_features: false
+use_lags: true

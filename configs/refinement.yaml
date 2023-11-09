@@ -1,0 +1,34 @@
+# Model & checkpoint parameters
+dataset: solar_nips
+device: cuda:0
+ckpt: ckpts/forecasting/solar_nips/649_.ckpt
+diffusion_config: diffusion_small_config
+context_length: 336
+prediction_length: 24
+use_lags: true
+use_features: false
+init_skip: false
+# Refinement parameters
+base_model: linear
+base_model_params: {}
+num_samples: 16
+iterations: 10
+refiner_configs:
+- refiner_name: most_likely
+  lr: 1.e-1
+  guidance: MSE
+- refiner_name: most_likely
+  lr: 1.e-1
+  guidance: quantile
+- refiner_name: mcmc
+  step_size: 1.e-1
+  guidance: MSE
+  method: lmc
+  method_kwargs:
+    noise_scale: 0.1
+- refiner_name: mcmc
+  step_size: 1.e-1
+  guidance: quantile
+  method: lmc
+  method_kwargs:
+    noise_scale: 0.1

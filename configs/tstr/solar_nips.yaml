@@ -1,0 +1,10 @@
+ckpt: dummy/solar_nips.ckpt
+context_length: 336
+dataset: solar_nips
+device: cuda:0
+diffusion_config: diffusion_small_config
+init_skip: false
+prediction_length: 24
+scaling_type: mean
+use_features: false
+use_lags: true

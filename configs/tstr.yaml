@@ -1,0 +1,11 @@
+# Model & checkpoint parameters
+dataset: solar_nips
+device: cuda:0
+ckpt: ckpts/solar_nips/version_236/1299_.ckpt
+diffusion_config: diffusion_small_config
+context_length: 336
+prediction_length: 24
+use_lags: true
+use_features: false
+init_skip: true
+scaling_type: mean

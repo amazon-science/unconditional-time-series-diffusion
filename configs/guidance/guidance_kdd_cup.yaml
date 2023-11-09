@@ -1,0 +1,16 @@
+ckpt: dummy/path.ckpt
+context_length: 312
+dataset: kdd_cup_2018_without_missing
+device: cuda:0
+diffusion_config: diffusion_small_config
+freq: H
+init_skip: true
+num_samples: 100
+prediction_length: 48
+sampler: ddpm
+sampler_params:
+  guidance: quantile
+  scale: 1
+setup: forecasting
+use_features: false
+use_lags: true

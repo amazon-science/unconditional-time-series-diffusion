@@ -1,0 +1,30 @@
+base_model: transformer
+ckpt: dummy/exchange_rate_nips.ckpt
+context_length: 360
+dataset: exchange_rate_nips
+device: cuda:0
+init_skip: true
+iterations: 20
+num_samples: 100
+prediction_length: 30
+refiner_configs:
+- guidance: MSE
+  lr: 0.01
+  refiner_name: most_likely
+- guidance: quantile
+  lr: 0.01
+  refiner_name: most_likely
+- guidance: MSE
+  method: lmc
+  method_kwargs:
+    noise_scale: 0.1
+  refiner_name: mcmc
+  step_size: 0.01
+- guidance: quantile
+  method: lmc
+  method_kwargs:
+    noise_scale: 0.1
+  refiner_name: mcmc
+  step_size: 0.01
+use_features: false
+use_lags: true

@@ -1,0 +1,11 @@
+__pycache__
+lightning_logs/
+.DS_Store
+*.egg-info
+/results/
+/ckpts/
+/saved_samples/
+.vscode/
+/sm_runs/
+/data/
+/checkpoints/

@@ -1,0 +1,10 @@
+ckpt: dummy/traffic_nips.ckpt
+context_length: 336
+dataset: traffic_nips
+device: cuda:0
+diffusion_config: diffusion_small_config
+init_skip: true
+prediction_length: 24
+scaling_type: mean
+use_features: false
+use_lags: true

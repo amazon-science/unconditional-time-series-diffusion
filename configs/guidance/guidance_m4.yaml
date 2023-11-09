@@ -1,0 +1,16 @@
+ckpt: dummy/path.ckpt
+context_length: 312
+dataset: m4_hourly
+device: cuda:0
+diffusion_config: diffusion_small_config
+freq: H
+init_skip: false
+num_samples: 100
+prediction_length: 48
+sampler: ddpm
+sampler_params:
+  guidance: quantile
+  scale: 2
+setup: forecasting
+use_features: false
+use_lags: false

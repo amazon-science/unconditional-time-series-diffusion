@@ -1,0 +1,24 @@
+# Model & checkpoint parameters
+dataset: solar_nips
+freq: H
+device: cuda:0
+ckpt: ckpts/forecasting/solar_nips/649_.ckpt
+diffusion_config: diffusion_small_config
+context_length: 336
+prediction_length: 24
+use_lags: true
+use_features: false
+init_skip: false
+sampler: ddpm
+sampler_params:
+  guidance: quantile
+  scale: 4
+num_samples: 100
+setup: forecasting
+# The following key will be ignored,
+# if the setup is forecasting
+missing_data_configs:
+- missing_scenario: BM-B
+  missing_values: 168
+- missing_scenario: BM-E
+  missing_values: 168

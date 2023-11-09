@@ -1,0 +1,10 @@
+ckpt: dummy/m4_hourly.ckpt
+context_length: 312
+dataset: m4_hourly
+device: cuda:0
+diffusion_config: diffusion_small_config
+init_skip: false
+prediction_length: 48
+scaling_type: mean
+use_features: false
+use_lags: false
