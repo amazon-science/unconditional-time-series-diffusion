@@ -2,7 +2,7 @@ model: unconditional
 diffusion_config: diffusion_small_config
 normalization: mean
 use_features: False
-use_lags: True
+use_lags: False
 dataset: solar_nips
 freq: H
 context_length: 336 # 360 for `D`
@@ -10,7 +10,7 @@ prediction_length: 24 # 30 for `D`
 lr: 1.e-3
 init_skip: True
 gradient_clip_val: 0.5
-max_epochs: 2
+max_epochs: 100
 num_batches_per_epoch: 128
 batch_size: 64
 scale: 4
