@@ -211,7 +211,7 @@ def main(config, log_dir):
 
     trainer = pl.Trainer(
         accelerator="gpu" if torch.cuda.is_available() else None,
-        devices=1,
+        devices=[int(config["device"].split(":")[-1])],
         max_epochs=config["max_epochs"],
         enable_progress_bar=True,
         num_sanity_val_steps=0,
