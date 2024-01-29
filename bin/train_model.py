@@ -10,8 +10,8 @@ from tqdm.auto import tqdm
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint, RichProgressBar
 
-from gluonts.dataset.loader import TrainDataLoader
-from gluonts.dataset.split import OffsetSplitter
+from gluonts.dataset.loader import TrainDataLoader, ValidationDataLoader
+from gluonts.dataset.split import OffsetSplitter, split
 from gluonts.itertools import Cached
 from gluonts.torch.batchify import batchify
 from gluonts.evaluation import make_evaluation_predictions, Evaluator
@@ -19,7 +19,6 @@ from gluonts.dataset.field_names import FieldName
 
 import uncond_ts_diff.configs as diffusion_configs
 from uncond_ts_diff.dataset import get_gts_dataset
-from uncond_ts_diff.model.callback import EvaluateCallback
 from uncond_ts_diff.model import TSDiff
 from uncond_ts_diff.sampler import DDPMGuidance, DDIMGuidance
 from uncond_ts_diff.utils import (
@@ -142,8 +141,6 @@ def main(config, log_dir):
         missing_values_splitter = OffsetSplitter(offset=-total_length)
         training_data, _ = missing_values_splitter.split(dataset.train)
 
-    num_rolling_evals = int(len(dataset.test) / len(dataset.train))
-
     transformation = create_transforms(
         num_feat_dynamic_real=0,
         num_feat_static_cat=0,
@@ -159,34 +156,27 @@ def main(config, log_dir):
     )
 
     callbacks = []
+    val_data_loader = None
     if config["use_validation_set"]:
+        val_data = training_data
+        training_data, _ = split(val_data, offset=-config["prediction_length"])
+        val_splitter = create_splitter(
+            past_length=config["context_length"] + max(model.lags_seq),
+            future_length=config["prediction_length"],
+            mode="val",
+        )
+        val_data_loader = ValidationDataLoader(
+            val_data,
+            batch_size=config["batch_size"],
+            stack_fn=batchify,
+            transform=transformation + val_splitter,
+        )
         transformed_data = transformation.apply(training_data, is_train=True)
-        train_val_splitter = OffsetSplitter(
-            offset=-config["prediction_length"] * num_rolling_evals
-        )
-        _, val_gen = train_val_splitter.split(training_data)
-        val_data = val_gen.generate_instances(
-            config["prediction_length"], num_rolling_evals
-        )
-
-        callbacks = [
-            EvaluateCallback(
-                context_length=config["context_length"],
-                prediction_length=config["prediction_length"],
-                sampler=config["sampler"],
-                sampler_kwargs=config["sampler_params"],
-                num_samples=config["num_samples"],
-                model=model,
-                transformation=transformation,
-                test_dataset=dataset.test,
-                val_dataset=val_data,
-                eval_every=config["eval_every"],
-            )
-        ]
+        log_monitor = "valid_loss"
     else:
         transformed_data = transformation.apply(training_data, is_train=True)
+        log_monitor = "train_loss"
 
-    log_monitor = "train_loss"
     filename = dataset_name + "-{epoch:03d}-{train_loss:.3f}"
 
     data_loader = TrainDataLoader(
@@ -195,6 +185,7 @@ def main(config, log_dir):
         stack_fn=batchify,
         transform=training_splitter,
         num_batches_per_epoch=config["num_batches_per_epoch"],
+        shuffle_buffer_length=10000,
     )
 
     checkpoint_callback = ModelCheckpoint(
@@ -215,12 +206,15 @@ def main(config, log_dir):
         max_epochs=config["max_epochs"],
         enable_progress_bar=True,
         num_sanity_val_steps=0,
+        check_val_every_n_epoch=10,
         callbacks=callbacks,
         default_root_dir=log_dir,
         gradient_clip_val=config.get("gradient_clip_val", None),
     )
     logger.info(f"Logging to {trainer.logger.log_dir}")
-    trainer.fit(model, train_dataloaders=data_loader)
+    trainer.fit(
+        model, train_dataloaders=data_loader, val_dataloaders=val_data_loader
+    )
     logger.info("Training completed.")
 
     best_ckpt_path = Path(trainer.logger.log_dir) / "best_checkpoint.ckpt"

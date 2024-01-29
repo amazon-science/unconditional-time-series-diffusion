@@ -13,21 +13,16 @@ gradient_clip_val: 0.5
 max_epochs: 100
 num_batches_per_epoch: 128
 batch_size: 64
-scale: 4
-# Used only in callback,
-# the final evaluation uses 100 samples
-num_samples: 16
 sampler: ddpm
 sampler_params:
   guidance: quantile
-  scale: 4
+  scale: 8
 use_validation_set: True
 eval_every: 50
 device: cuda:0
 setup: forecasting
 do_final_eval: True
-# The following key will be ignored,
-# if the setup is forecasting
+# The following key will be ignored, if the setup is forecasting
 missing_data_configs:
 - missing_scenario: BM-B
   missing_values: 168
