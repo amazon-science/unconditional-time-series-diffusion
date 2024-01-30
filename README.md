@@ -37,6 +37,9 @@ conda create --name tsdiff --yes python=3.8 && conda activate tsdiff
 pip install --editable "."
 ```
 
+> [!IMPORTANT]  
+> We have some updates in the `update` branch. If you're interested in testing out TSDiff or [training it on a custom dataset](https://github.com/amazon-science/unconditional-time-series-diffusion/issues/7), using the `update` branch maybe faster for training.
+
 ## Usage
 
 ### Training Models
