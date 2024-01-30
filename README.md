@@ -37,13 +37,13 @@ conda create --name tsdiff --yes python=3.8 && conda activate tsdiff
 pip install --editable "."
 ```
 
-### What's different in this branch?
-
-This branch has some updates that should make training faster. This would make it easier to test TSDiff out or use it on some custom dataset. If you're interested in reproducing the results from the paper, please use the main branch. Here are the key differences in this branch.
-- Callback that evaluates during training has been removed.
-- Instead, the denoising loss on the validation is used for checkpoint selection.
-- Train only for 100 epochs.
-- Shuffle buffer is used during training.
+> [!IMPORTANT]  
+> **What's different in this branch?**    
+> This branch has some updates that should make training faster. This would make it easier to test TSDiff out or use it on some custom dataset. If you're interested in reproducing the results from the paper, please use the main branch. Here are the key differences in this branch. 
+> - Callback that evaluates during training has been removed.
+> - Instead, the denoising loss on the validation is used for checkpoint selection.
+> - Train only for 100 epochs.
+> - Shuffle buffer is used during training.
 
 ## Usage
 
