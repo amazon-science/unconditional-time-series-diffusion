@@ -173,11 +173,11 @@ def main(config, log_dir):
         )
         transformed_data = transformation.apply(training_data, is_train=True)
         log_monitor = "valid_loss"
+        filename = dataset_name + "-{epoch:03d}-{valid_loss:.3f}"
     else:
         transformed_data = transformation.apply(training_data, is_train=True)
         log_monitor = "train_loss"
-
-    filename = dataset_name + "-{epoch:03d}-{train_loss:.3f}"
+        filename = dataset_name + "-{epoch:03d}-{train_loss:.3f}"
 
     data_loader = TrainDataLoader(
         Cached(transformed_data),
